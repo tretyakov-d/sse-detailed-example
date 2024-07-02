@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SSE Detailed Example</title>
+</head>
+<body>
+<h1 style="text-align: center">Open dev console to see logs</h1>
+
+<script>
+    const eventSource = new EventSource('/sse');
+
+    eventSource.onmessage = function (event) {
+        console.log(`MESSAGE`, event);
+    };
+
+    eventSource.addEventListener("CUSTOM_EVENT", (event) => {
+        console.log(`CUSTOM_EVENT`, event)
+    })
+
+    // triggered when connection established
+    eventSource.onopen = function (event) {
+        console.log(`CONNECTED`, event)
+    }
+
+    // triggered on connection error
+    // EventSource will keep trying to reconnect indefinitely (unless eventSource.close() is called)
+    eventSource.onerror = function (event) {
+        console.error(`ERROR`, event)
+    }
+
+    // eventSource.close();
+</script>
+</body>
+</html>
